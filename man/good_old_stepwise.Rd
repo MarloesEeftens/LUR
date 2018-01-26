@@ -29,6 +29,7 @@ LUR_fit<-good_old_stepwise(x=data_ij,dependent="dependent",predictors=paste0("va
 LUR_fit
 #The following only works if a model was actually possible...
 summary(LUR_fit)
+#This is how much contrast we could explain in the dependent data.
 rsq(LUR_fit)
 }
 \keyword{}
