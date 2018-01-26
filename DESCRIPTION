@@ -1,0 +1,13 @@
+Package: LUR
+Type: Package
+Title: A nostalgic package for land use regression ESCAPE-style. 
+Version: 1.0.0
+Author: Marloes Eeftens <marloes.eeftens@swisstph.ch>
+Maintainer: Marloes Eeftens <marloes.eeftens@swisstph.ch>
+Description: It used to be so simple to select variables for your land use regression model. Here's for everyone who just wants to select their variables in a stepwise forward manner, ESCAPE-style. (If only to prove how much better the new method is...)
+License: GNU GPLv3
+Depends: rsq,
+dplyr,
+ggplot2
+Encoding: UTF-8
+LazyData: true
