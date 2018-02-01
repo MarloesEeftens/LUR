@@ -48,8 +48,8 @@ good_old_stepwise<-function(x,dependent,predictors,adj_rsq_improvement,coeff_sig
       max_cooksD<-c(max_cooksD,max(cooks.distance(model_fit)))
     }
     #Make an overview of all the models:
-    overview<-cbind.data.frame(predictors,adj_r2,r2,new_coeff,lowest_coeff,pvalue,max_VIF,max_cooksD)[order(-adj_r2),]
-    #Select only those predictors which meet our criteria:
+    overview<-cbind.data.frame(predictors,adj_r2,r2,new_coeff,lowest_coeff,pvalue,max_VIF,max_cooksD)
+    overview<-overview[order(overview$adj_r2,decreasing=TRUE),]#Select only those predictors which meet our criteria:
     overview<-subset(overview,
       adj_r2>model_adj_rsq+adj_rsq_improvement& #New model should improve upon previous model
       sign(new_coeff) %in% coeff_sign&          #Coefficient should be in coeff_sign
@@ -77,7 +77,7 @@ good_old_stepwise<-function(x,dependent,predictors,adj_rsq_improvement,coeff_sig
   #3) Once there are no more variables which improve the model any further, run the final model:
   if(length(predictors_sel)>0){
     right_eqn_side_sel<-paste(predictors_sel,collapse="+")
-    eval(parse(text=paste0("model_fit_sel<-glm(",dependent,"~",right_eqn_side_sel,",data=x)")))
+    eval(parse(text=paste0("model_fit_sel<-lm(",dependent,"~",right_eqn_side_sel,",data=x)")))
   }
   #  Or return a message that no relevant predictors could be identified:
   if(length(predictors_sel)==0){
