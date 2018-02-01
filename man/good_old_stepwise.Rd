@@ -7,11 +7,11 @@
   \item{x}{An R dataframe which includes a dependent variable and predictors.}
   \item{dependent}{The name of the variable which you would like to create a model for.}
   \item{predictors}{A vector of strings, including the names of all the predictor variables which should be considered for inclusion in your LUR model.}
-  \item{adj_rsq_improvement}{(Optional, defaults to 0.01) The minimal improvement in adj_rsq that is needed to increase model complexity by including an additional variable.}
-  \item{coeff_sign}{Optional, defaults to c(1)}{If coeff_sign=c(1), we a priori define a direction of effect for all predictors: as their value increases, so does the level of the dependent. (Make sure to flip the sign of predictors for which you want to define a negative impact on the dependent, e.g. distance from a source, presence of pollution sinks). If you do not want to specify a direction of effect, set coeff_sign=c(-1,1). This way you accept both negative and positive effects. (It makes no sense to include 0, since we don't want variables without any effect.) have been flipped prior to evaluation, so that these also have positive coefficients.}
+  \item{adj_rsq_improvement}{(Optional, defaults to 0.01.) The minimal improvement in adj_rsq that is needed to increase model complexity by including an additional variable.}
+  \item{coeff_sign}{(Optional, defaults to c(1).) If coeff_sign=c(1), we a priori define a direction of effect for all predictors: as their value increases, so does the level of the dependent. (Make sure to flip the sign of predictors for which you want to define a negative impact on the dependent, e.g. distance from a source, presence of pollution sinks). If you do not want to specify a direction of effect, set coeff_sign=c(-1,1). This way you accept both negative and positive effects. (It makes no sense to include 0, since we don't want variables without any effect.) have been flipped prior to evaluation, so that these also have positive coefficients.}
   \item{pvalue_max}{(Optional, defaults to 0.05.) A threshold for the P value: this allows you to only include additional variables if they yield a level of significance which is greater than p.}
-  \item{VIF_max}{(Optional, defaults to 3) A high variance inflation factor (of VIF) indicates that two predictors are collinear, which can lead to unstable coefficients and wobbly models.}
-  \item{cooksD_max}{(Optional, defaults to 1) A high Cook's D value for one or several points indicates that these points have a high influence on the model coefficients. If these depend heavily on a single or a few sites only, the model coefficients are less stable.}
+  \item{VIF_max}{(Optional, defaults to 3.) A high variance inflation factor (of VIF) indicates that two predictors are collinear, which can lead to unstable coefficients and wobbly models.}
+  \item{cooksD_max}{(Optional, defaults to 1.) A high Cook's D value for one or several points indicates that these points have a high influence on the model coefficients. If these depend heavily on a single or a few sites only, the model coefficients are less stable.}
 }
 \details{Assumptions: 1) We maximize adj_rsq; 2) Observations are independent; 3) All predictors are equally eligible for inclusion; 4) There is no maximum to the number of variables which can be included by the model; 5) All variables are assumed to be linearly related to the dependent.}
 \value{The result of this function is the result of a lm() with all selected predictors included.}
@@ -20,17 +20,17 @@
 \note{This function is preliminary and has many settings and defaults. I hope all makes sense, otherwise please suggest edits! :-)}
 \seealso{}
 \examples{
-#Let's assume we did a monitoring campaign with 20 sites and 60 predictors
+#Let's assume we did a monitoring campaign with 20 sites and 80 predictors
 nr_sites<-20
 nr_predictors<-80
 
 #Generate some normally distributed air pollution data:
-dependent<-rnorm(n=nr_sites,m=25,sd=8)
+NO2_measurements<-rnorm(n=nr_sites,m=25,sd=8)
 #And (independently) some normally distributed predictor data:
 predictors<-as.data.frame(matrix(rnorm(n=nr_sites*nr_predictors,m=0,sd=1),nrow=nr_sites))
 names(predictors)<-paste0("var_",seq(1:nr_predictors))
-my_LUR_data<-cbind(dependent,predictors)
-LUR_fit<-good_old_stepwise(x=my_LUR_data,dependent="dependent",predictors=paste0("var_",seq(1:nr_predictors)))
+my_LUR_data<-cbind(NO2_measurements,predictors)
+LUR_fit<-good_old_stepwise(x=my_LUR_data,dependent="NO2_measurements",predictors=paste0("var_",seq(1:nr_predictors)))
 #Sometimes LUR_fit will give you a model, sometimes not...
 LUR_fit
 #Did you get one? Great!
