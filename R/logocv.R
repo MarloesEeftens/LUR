@@ -63,7 +63,7 @@ logocv<-function(x,dependent,fixed,random=c("intercept"),group,export_estimates=
   eval(parse(text=equation))
 
   #7) Delete dummy variables, and delete coefficients if needed
-  x<-x[,-which(names(x) %in% dummy_varnames)]
+  if(length(dummy_varnames)>0){x<-x[,-which(names(x) %in% dummy_varnames)]}
   if(export_estimates==FALSE){x<-x[,-which(names(x) %in% c("intercept",paste0(fixed_varnames,"_coeff")))]}
 
   #8) Return the new dataframe with extra column "logocv":
