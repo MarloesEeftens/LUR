@@ -1,11 +1,11 @@
 \name{loocv}
 \alias{loocv}
-\title{Leave One Out Cross Validation (LOOCV))}
+\title{Leave One Out Cross Validation (LOOCV)}
 \description{This function takes a dataframe with n sites and the predictors you specified, and adds a column called "loocv" containing the predicted value for i, had the model been fit on the other n-1 sites and applied to site i.}
 \usage{loocv(x,dependent,predictors)}
 \arguments{
   \item{x}{An R dataframe which includes a dependent variable and predictors.}
-  \item{dependent}{The name of the variable which you would like to create a model for.}
+  \item{dependent}{The name of the variable which the model aims to estimate.}
   \item{predictors}{A vector of strings, including the names of all the predictor variables which should be considered for inclusion in your LUR model.}
 }
 \details{}
