@@ -4,17 +4,12 @@
 ##### Last edit: 29/01/2018 #####
 #################################
 
-good_old_stepwise<-function(x,dependent,predictors,adj_rsq_improvement,coeff_sign,pvalue_max,VIF_max,cooksD_max){
+good_old_stepwise<-function(x,dependent,predictors,adj_rsq_improvement=0.01,coeff_sign=c(1),pvalue_max=0.05,VIF_max=3,cooksD_max=1){
 
   #0) Check inputs, set defaults:
   if(is.data.frame(x)==FALSE){stop("No data frame specified for x.")}
   if(missing(dependent)|!is.vector(dependent)|!is.character(dependent)){stop("Specify dependent as a character vector")}
   if(missing(predictors)|!is.vector(predictors)|!is.character(predictors)){stop("Specify predictors as a character vector")}
-  if(missing(adj_rsq_improvement)){adj_rsq_improvement<-0.01}
-  if(missing(coeff_sign)){coeff_sign<-c(1)}
-  if(missing(pvalue_max)){pvalue_max<-0.05}
-  if(missing(VIF_max)){VIF_max<-3}
-  if(missing(cooksD_max)){cooksD_max<-1}
 
   #1) Set initial variables: model Rsq is 0 and there are no predictors selected
   model_adj_rsq<-0
