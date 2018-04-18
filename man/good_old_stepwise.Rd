@@ -2,7 +2,7 @@
 \alias{good_old_stepwise}
 \title{Fit a good old stepwise LUR model!}
 \description{Given a dataframe with a dependent variable and a number of predictors to be evaluated in a stepwise manner, this function returns the output of a linear model ("lm") including those predictors which give you the optimal adjusted Rsquared, within the statistical constraints below, assuming a model of the structure: dependent = intercept + beta1*predictor1 + beta2*predictor2 +...}
-\usage{good_old_stepwise(x,dependent,predictors,p)}
+\usage{good_old_stepwise<-function(x,dependent,predictors,adj_rsq_improvement=0.01,coeff_sign=c(1),pvalue_max=0.05,VIF_max=3,cooksD_max=1)}
 \arguments{
   \item{x}{An R dataframe which includes a dependent variable and predictors.}
   \item{dependent}{The name of the variable which you would like to create a model for.}
