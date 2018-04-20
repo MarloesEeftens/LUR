@@ -46,7 +46,7 @@ logocv<-function(x,dependent,fixed,random=c("intercept"),group,export_estimates=
 
   #4) Construct an overview of the coefficients for each group left out:
   estimates<-rbindlist(lapply(estimates,as.data.frame.list))
-  names(estimates)<-c(group,"intercept",paste0(fixed_varnames,"_coeff"))
+  names(estimates)<-gsub("\\*","_",c(group,"intercept",paste0(fixed_varnames,"_coeff")))
 
   #5) Merge the coefficients into the original dataframe x by group:
   x<-merge(x=x,y=estimates,by=group,all=TRUE)
@@ -54,9 +54,9 @@ logocv<-function(x,dependent,fixed,random=c("intercept"),group,export_estimates=
   #6) Apply the model (only the fixed part!) to each of the test datasets:
   equation<-paste0(c("x$logocv<-x$intercept",
                      rbind(c(rep("+x$",length(fixed_varnames))),
-                           fixed_varnames,
+                           gsub("\\*","\\*x$",fixed_varnames),
                            c(rep("*x$",length(fixed_varnames))),
-                           fixed_varnames,
+                           gsub("\\*","_",c(paste0(fixed_varnames))),
                            c(rep("_coeff",length(fixed_varnames)))
                           )
                      ),collapse="")
