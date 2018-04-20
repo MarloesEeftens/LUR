@@ -2,14 +2,14 @@
 \alias{logocv}
 \title{Leave One Group Out Cross Validation (LOGOCV) for the fixed part of a mixed model.}
 \description{This function takes a dataframe with n sites and the predictors you specified, and adds a column called "logocv" containing the predicted value for i, had the model been fit on the other n-1 sites and applied to site i.}
-\usage{logocv(x,dependent,fixed,random=c("intercept"),group,export_estimates=FALSE)}
+\usage{logocv(x,dependent,fixed,random=c("intercept"),group,export_coefficients=FALSE)}
 \arguments{
   \item{x}{An R dataframe which includes a dependent variable and all of the mentioned fixed and random effects.}
   \item{dependent}{The name of the variable which the model aims to estimate.}
   \item{fixed}{A vector of strings, including the names of all predictors which are included as "fixed effects" in the LUR model. These can be numeric or factors. Interactions can be included as well, in the same way as you typically do in a lmer model, like so: fixed = c("a","b","a*b")}.
   \item{random}{Defaults to c("intercept"): A vector of strings, including the names of all predictors which are to be included as "random effects" in the model.}
   \item{group}{The grouping variable responsible for the random component(s) of the model. In each iteration, the logocv function leaves out all observations which have the same value for the variable "group". For the estimation, only the fixed effects are used, which are calculated based on a model of the same structure, fit to the remaining groups.}
-  \item{export_estimates}{Defaults to FALSE: If set to TRUE, this option will add one column to the output dataframe for each fixed predictor that was included. For a given predictor "ABC", the column will be named "ABC_coeff" and will have the value of its fixed effect as calculated for all groups in the dataset except the one that particular observation belongs to.}
+  \item{export_coefficients}{Defaults to FALSE: If set to TRUE, this option will add one column to the output dataframe for each fixed predictor that was included. For a given predictor "ABC", the column will be named "ABC_coeff" and will have the value of its fixed effect as calculated for all groups in the dataset except the one that particular observation belongs to.}
 }
 \details{}
 \value{The function returns the dataframe x, with an additional column name "logocv" which contains the predicted value for each observation, fitted on the entire dataset EXCEPT the group which that particular observation belongs to.}

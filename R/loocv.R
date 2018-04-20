@@ -4,28 +4,33 @@
 ##### Last edit: 01/02/2018 #####
 #################################
 
-loocv<-function(x,dependent,predictors){
+loocv<-function(x,dependent,predictors,export_coefficients=FALSE){
 
   #0) Check settings, set defaults:
   if(missing(x)){stop("No dataframe specified for x")}
   if(missing(dependent)){stop("No dependent variable specified")}
   if(missing(predictors)){stop("Please specify the selected predictors as a vector of strings.")}
 
-  #1) Create a new variable in x called "loocv":
-  x$loocv<-c(rep(NA,dim(x)[1]))
+  #1) Create a new list to store results of each iteration:
+  loocv_i<-list()
 
   #2) Construct the right side of the modelling equation:
   right_eqn_side<-paste(c(predictors),collapse="+")
 
   #3) Leave out one observation:
   for(i in 1:dim(x)[1]){
-    x_train<-x[-i,]
-    x_test<-x[i,]
+    eval(parse(text=paste0("model_train<-lm(data=x[-i,],",dependent,"~",right_eqn_side,")")))
     #Apply the model to each of the data sets from which i was removed:
-    eval(parse(text=paste0("model_train<-lm(data=x_train,",dependent,"~",right_eqn_side,")")))
-    x$loocv[i]<-predict(model_train,x_test)
+    loocv_i[[i]]<-c(predict(model_train,x[i,])[[1]],unname(model_train$coefficients))
   }
 
-  #4) Return the new dataframe with extra column "loocv":
+  #4) Collapse list to a dataframe:
+  loocv<-as.data.frame(rbindlist(lapply(loocv_i,as.data.frame.list)))
+  names(loocv)<-c("loocv","intercept",paste0(predictors,"_coeff"))
+
+  #5) Merge back in to the original dataframe x:
+  x<-cbind.data.frame(x,loocv)
+
+  #6) Return the new dataframe with extra column "loocv":
   return(x)
 }

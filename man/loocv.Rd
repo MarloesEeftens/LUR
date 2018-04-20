@@ -2,11 +2,12 @@
 \alias{loocv}
 \title{Leave One Out Cross Validation (LOOCV)}
 \description{This function takes a dataframe with n sites and the predictors you specified, and adds a column called "loocv" containing the predicted value for i, had the model been fit on the other n-1 sites and applied to site i.}
-\usage{loocv(x,dependent,predictors)}
+\usage{loocv(x,dependent,predictors,export_coefficients=FALSE)}
 \arguments{
   \item{x}{An R dataframe which includes a dependent variable and predictors.}
   \item{dependent}{The name of the variable which the model aims to estimate.}
   \item{predictors}{A vector of strings, including the names of all the predictor variables which should be considered for inclusion in your LUR model.}
+  \item{export_coefficients}{Defaults to FALSE: If set to TRUE, this option will add one column to the output dataframe for each fixed predictor that was included. For a given predictor "ABC", the column will be named "ABC_coeff" and will have the value of the coefficient as calculated for all observations except the one being estimated.}
 }
 \details{}
 \value{The function returns the dataframe x, with an additional column names "loocv" which contains the predicted value for i, fitted on the entire dataset EXCEPT observation i.}
